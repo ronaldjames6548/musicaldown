@@ -1,67 +1,59 @@
 // src/middleware.ts
 import { defineMiddleware } from 'astro:middleware';
 
-const supportedLocales = ['vi', 'id', 'ms'] as const; // Non-default locales
+const supportedLocales = ['vi', 'id', 'ms'] as const;
 const allLocales = ['en', 'vi', 'id', 'ms'] as const;
 const defaultLocale = 'en';
 
 function getLocaleFromCountry(countryCode: string | null): string | null {
   if (!countryCode) return null;
   const code = countryCode.toUpperCase();
-
   if (code === 'VN') return 'vi';
   if (code === 'ID') return 'id';
   if (code === 'MY') return 'ms';
-
-  return null; // Fallback to default (en)
+  return null;
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
-  const pathname = url.pathname;
+  const { pathname } = url;
 
-  // 1. Skip assets, API, and admin routes
+  // 1. Skip static assets and internal routes
   if (
-    pathname.startsWith('/api/') ||
-    pathname.startsWith('/admin/') ||
-    pathname.startsWith('/_') ||
-    pathname.match(/\.(js|css|png|jpg|jpeg|webp|svg|ico|json|xml|txt|avif|woff|woff2|ttf|eot)$/) ||
-    pathname === '/robots.txt' ||
-    pathname === '/sitemap.xml' ||
-    pathname.includes('/rss.xml')
+    pathname.includes('.') || 
+    pathname.startsWith('/api/') || 
+    pathname.startsWith('/_') || 
+    pathname.startsWith('/admin/')
   ) {
     return next();
   }
 
-  // 2. Check if the URL already has a locale prefix
+  // 2. Check if the URL already starts with a supported locale
   const firstSegment = pathname.split('/').filter(Boolean)[0];
-  const hasLocalePrefix = supportedLocales.includes(firstSegment as any);
+  const isLocalized = supportedLocales.includes(firstSegment as any);
 
-  // 3. Logic for root path or non-prefixed paths
-  if (!hasLocalePrefix) {
-    // Priority A: User manual preference (Cookie)
+  // 3. If NOT localized and at the root or a generic path, check for redirect
+  if (!isLocalized) {
     const localeCookie = context.cookies.get('user-locale')?.value;
-    
-    // Priority B: GeoIP Detection (Vercel)
     const countryHeader = context.request.headers.get('x-vercel-ip-country');
     const detectedGeoLocale = getLocaleFromCountry(countryHeader);
 
-    // Determine target locale
-    let targetLocale = defaultLocale;
-    if (localeCookie && allLocales.includes(localeCookie as any)) {
-        targetLocale = localeCookie;
-    } else if (detectedGeoLocale) {
-        targetLocale = detectedGeoLocale;
-    }
+    const targetLocale = (localeCookie && allLocales.includes(localeCookie as any)) 
+      ? localeCookie 
+      : detectedGeoLocale;
 
-    // 4. Perform Redirect if target is not English (since English is at /)
-    if (targetLocale !== defaultLocale) {
-      // Prevent infinite redirect: only redirect if we aren't already looking at a prefixed version
-      // and if the current path doesn't already start with the target locale
-      const newPath = `/${targetLocale}${pathname === '/' ? '' : pathname}${url.search}`;
-      return context.redirect(newPath, 302);
+    if (targetLocale && targetLocale !== defaultLocale) {
+      return context.redirect(`/${targetLocale}${pathname === '/' ? '' : pathname}${url.search}`, 302);
     }
   }
 
-  return next();
+  // 4. Handle 404s for localized routes
+  const response = await next();
+  
+  // If we get a 404 on a /vi/something path, make sure it shows the localized 404 page
+  if (response.status === 404 && isLocalized) {
+      return context.redirect(`/${firstSegment}/404`);
+  }
+
+  return response;
 });

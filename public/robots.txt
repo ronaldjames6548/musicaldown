@@ -11,14 +11,10 @@ Allow: /contact$
 Allow: /contact/$
 Allow: /privacy-policy$
 Allow: /privacy-policy/$
-Allow: /musically-down$
-Allow: /musically-down/$
-Allow: /savetik-downloader-download-tiktok-videos-without-watermark$
-Allow: /savetik-downloader-download-tiktok-videos-without-watermark/$
 Allow: /blog$
 Allow: /blog/$
-Allow: /blog/how-to-save-tiktok-videos-without-watermark$
-Allow: /blog/how-to-save-tiktok-videos-without-watermark/$
+Allow: /blog/how-to-download-all-of-your-tiktok-videos-with-musicaldown-online-tiktok-downloader$
+Allow: /vi/blog/how-to-save-tiktok-videos-without-watermark/$
 
 
 # Disallow everything else

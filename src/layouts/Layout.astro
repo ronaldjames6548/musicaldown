@@ -7,6 +7,7 @@ import Footer from '../components/footer.astro';
 import ThemeSelector from '../components/themeselector.astro';
 import LanguageSelector from '../components/languageselector.astro';
 
+
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');

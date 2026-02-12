@@ -12,14 +12,14 @@ import { Icon } from "astro-icon/components";
 // Generate a new path for every collection post
 export async function getStaticPaths() {
 	const blogEntries = await getCollection("blog");
-	// Filter for Turkish blog posts (posts starting with "tr/")
+	// Filter for Turkish blog posts (posts starting with "vi/")
 	const localizedBlogEntries = blogEntries.filter((entry) =>
-		entry.slug && entry.slug.startsWith("tr/")
+		entry.slug && entry.slug.startsWith("vi/")
 	);
 	
 	return localizedBlogEntries.map((post) => {
 		let slug = post.slug;
-		// Remove the "tr/" prefix and any "blog/" if present
+		// Remove the "vi/" prefix and any "blog/" if present
 		slug = slug.substring(3).replaceAll("blog/", "");
 		return {
 			params: { slug: slug },
@@ -46,7 +46,7 @@ function localizePath(path: string) {
 }
 ---
 
-<Layout title={post.data.title} lang={lang} dir={lang === 'tr' ? 'ltr' : 'ltr'}>
+<Layout title={post.data.title} lang={lang} dir={lang === 'vi' ? 'ltr' : 'ltr'}>
 	<Container>
 		<div class="mx-auto prose prose-lg dark:prose-invert mt-14">
 			<a
@@ -110,7 +110,7 @@ function localizePath(path: string) {
 					script.dataset.emitMetadata = '0';
 					script.dataset.inputPosition = 'top';
 					script.dataset.theme = localStorage.theme == 'dark' ? 'dark' : localStorage.theme == 'light' ? 'light' : 'preferred_color_scheme';
-					script.dataset.lang = 'tr';
+					script.dataset.lang = 'vi';
 					script.dataset.loading = 'lazy';
 					script.crossOrigin = 'anonymous';
 					script.async = true;

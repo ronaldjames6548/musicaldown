@@ -17,7 +17,7 @@ export async function getStaticPaths({ paginate }) {
 	// Preprocess the posts to split the slugs and get the languages
 	var processedPosts = posts.map((post) => {
 		const [...slug] = post.slug.split("/");
-		let lang = "tr"; // Default to Turkish for this page
+		let lang = "vi"; // Default to Turkish for this page
 		var firstSlug = post.slug.match(/^([^\/]*)\//);
 		if (firstSlug) {
 			lang = firstSlug[1];
@@ -29,9 +29,9 @@ export async function getStaticPaths({ paginate }) {
 		};
 	});
 	
-	// Filter posts for Turkish language ("tr")
+	// Filter posts for Turkish language ("vi")
 	const localizedPosts = processedPosts.filter(
-		(post) => post.lang === "tr",
+		(post) => post.lang === "vi",
 	);
 	
 	localizedPosts.sort(
@@ -52,7 +52,7 @@ const lang = getLangFromUrl(safeUrl);
 const t = useTranslations(lang);
 ---
 
-<Layout title="Blog" dir={lang === 'tr' ? 'ltr' : 'ltr'}>
+<Layout title="Blog" dir={lang === 'vi' ? 'ltr' : 'ltr'}>
 	<Container>
 		<Sectionhead>
 			<Fragment slot="title">Our Blog</Fragment>

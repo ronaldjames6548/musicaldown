@@ -14,10 +14,10 @@ export async function getStaticPaths() {
 		return !data.draft && data.publishDate < new Date();
 	});
 	
-	// Filter for Turkish posts (posts starting with "tr/")
+	// Filter for Turkish posts (posts starting with "vi/")
 	const localizedPosts = posts.filter((page) => {
 		const [lang, ...slug] = page.slug.split("/");
-		return lang === "tr";
+		return lang === "vi";
 	});
 	
 	const tags = new Set();
@@ -36,7 +36,7 @@ export async function getStaticPaths() {
 						post.data.tags.find((elem) => elem.toLowerCase() === tag),
 				),
 				tag: tag,
-				lang: "tr",
+				lang: "vi",
 			},
 		};
 	});
@@ -50,7 +50,7 @@ const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 ---
 
-<Layout title="Blog" dir={lang === 'tr' ? 'ltr' : 'ltr'}>
+<Layout title="Blog" dir={lang === 'vi' ? 'ltr' : 'ltr'}>
 	<Container>
 		<Sectionhead>
 			<Fragment slot="title">#{tag}</Fragment>
