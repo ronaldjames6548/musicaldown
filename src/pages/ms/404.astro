@@ -1,0 +1,48 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Hero from "@components/hero.astro";
+import Container from "@components/container.astro"; 
+// Add new built-in i18n imports
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// Get current language and create translation function
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// Helper function to create localized paths
+function localizePath(path: string) {
+	if (!path || (path && path.startsWith('http')) || path === '#') return path;
+	return getRelativeLocaleUrl(lang, path);
+}
+
+
+// SEO/props: Matched to ui.ts structure (flat keys under language)
+const title = 'Ralat 404 - MusicallyDown - Muat Turun Video TikTok Tanpa Tera Air dalam Beberapa Saat';
+const description = 'Aduh! Halaman ini telah melalui pengembaraan yang tidak dijangka. Nampaknya anda cuba melawat halaman yang tidak wujud (atau telah dialihkan).';
+const image = 'meta/opengraph.webp';  // Static; add to ui.ts if i18n needed (e.g., t('site.tvd_image'))
+const variant = '404';
+---
+
+<Layout title={title} description={description} image={image} variant={variant} lang={lang}>
+<Hero />
+
+	<Container>
+		<section class="flex items-center h-full p-16">
+			<div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
+				<div class="max-w-md text-center">
+					
+					<h2 class="mb-8 font-bold text-9xl">
+						<span class="sr-only">Ralat</span>
+						<span class="text-primary">404</span>
+					</h2>
+					<p class="text-3xl font-semibold md:text-3xl">Maaf, kami tidak menemui halaman ini.</p>
+					<p class="mt-4 mb-8 text-lg text-muted">Tetapi jangan risau, anda boleh menemui banyak perkara lain di halaman utama kami.</p>
+					<a rel="noopener noreferrer" href={localizePath("/")} class="btn ml-4">Kembali ke Laman Utama</a>
+				</div>
+			</div>
+		</section>
+	</Container>
+</Layout>

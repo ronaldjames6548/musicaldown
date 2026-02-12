@@ -1,0 +1,122 @@
+---
+import Link from "@components/ui/link.astro";
+// Remove old astro-i18next imports
+// import { localizePath } from "astro-i18next";
+// import { t } from "i18next";
+
+// Add new built-in i18n imports
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// @ts-ignore
+import { Icon } from "astro-icon/components";
+
+// Get current language and create translation function
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// Helper function to create localized paths (if needed)
+function localizePath(path: string) {
+	if (!path || (path && path.startsWith('http')) || path === '#') return path;
+	return getRelativeLocaleUrl(lang, path);
+}
+const createMarkup = (text: string) => ({ __html: text });
+const features = [
+	
+];
+---
+
+<div class="relative p-4">
+      <div class="max-w-7xl mx-auto">
+            <div class="feature-box backdrop-blur-sm">
+				<div itemprop="itemListElement" itemscope itemtype="https://schema.org/HowToStep" class="feature-box backdrop-blur-sm">
+					<div class="text-center py-8">
+						<h2 class="text-2xl md:text-3xl font-bold text-gray-900">{t("dtv.th2")}</h2>
+                        <meta itemprop="url" content="/" />
+                        <meta itemprop="timeRequired" content="PT1M"/>
+						<div class="w-24 h-1 mx-auto bg-amber-400 rounded-full"></div>
+						<p class="text-left mt-4 mx-auto text-lg text-gray-900" set:html={t('dtv.text')} />
+						<p class="text-left mt-4 mx-auto text-lg text-gray-900" set:html={t('dtv.text1')} />
+
+						
+					</div>
+
+
+
+<div class="relative p-8 md:p-3 mb-6" style="opacity: 1; transform: none;">
+		<span class="absolute right-8 top-0 text-8xl font-light text-pink-500">Musically</span>
+</div>
+	
+	<h2 class="text-2xl text-center md:text-3xl font-semibold text-gray-900 md:p-4 mb-4">{t("dtv.how2h")}</h2>
+	<p class="text-left mx-auto text-lg text-gray-900" set:html={t('dtv.how2text')} />
+<div class="relative">
+            <!-- Horizontal Line -->
+            <div class="absolute top-[142px] left-0 right-0 h-[2px] bg-gray-300"></div>
+<div class="grid grid-cols-2 md:grid-cols-4 py-8 gap-8 items-stretch box-hover-wrapper counter-reset">
+
+                <!-- Step 02 -->
+                <div class="text-center">
+                    <div class="relative mb-8">
+						<div class="text-[90px] font-bold text-gray-300 leading-none mb-4">01</div>
+                        <div class="flex justify-center">
+                            <div class="w-3 h-3 bg-lime-400 rounded-full relative z-10"></div>
+                        </div>
+                    </div>
+                    <div class="mt-12">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">{t("dtv.how1")}</h3>
+                        <p class="text-gray-600 text-lg leading-relaxed" set:html={t('dtv.how1text')} />
+                    </div>
+                </div>
+
+                <!-- Step 03 -->
+                <div class="text-center">
+                    <div class="relative mb-8">
+						<div class="text-[90px] font-bold text-gray-300 leading-none mb-4">02</div>
+                        <div class="flex justify-center">
+                            <div class="w-3 h-3 bg-lime-400 rounded-full relative z-10"></div>
+                        </div>
+                    </div>
+                    <div class="mt-12">
+                        
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">{t("dtv.how2")}</h3>
+                        <p class="text-gray-600 text-lg leading-relaxed" set:html={t('dtv.how2ntext')} />
+                    </div>
+                </div>
+
+                <!-- Step 04 -->
+                <div class="text-center">
+                    <div class="relative mb-8">
+					<div class="text-[90px] font-bold text-gray-300 leading-none mb-4">03</div> 
+					<div class="flex justify-center">
+                            <div class="w-3 h-3 bg-lime-400 rounded-full relative z-10"></div>
+                        </div>
+                    </div>
+                    <div class="mt-12">
+                        
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">{t("dtv.how3")}</h3>
+                        <p class="text-gray-600 text-lg leading-relaxed" set:html={t('dtv.how3paste')} />
+                    </div>
+                </div>
+
+                <!-- Step 05 -->
+                <div class="text-center">
+                    <div class="relative mb-8">
+                        <div class="text-[90px] font-bold text-gray-300 leading-none mb-4">04</div>
+                        <div class="flex justify-center">
+                            <div class="w-3 h-3 bg-lime-400 rounded-full relative z-10"></div>
+                        </div>
+                    </div>
+                    <div class="mt-12">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">{t("dtv.how4")}</h3>
+                        <p class="text-gray-600 text-lg leading-relaxed" set:html={t('dtv.how4text')} />
+                    </div>
+                </div>
+           
+                </div>
+
+</div>
+
+	</div>
+</div>
+</div>

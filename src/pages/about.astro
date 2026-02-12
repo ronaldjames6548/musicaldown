@@ -1,0 +1,95 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+// Remove old astro-i18next imports
+// import { localizePath } from "astro-i18next";
+// import { changeLanguage } from "i18next";
+// changeLanguage("en");
+
+// Add new built-in i18n imports
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// Get current language and create translation function
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// Helper function to create localized paths
+function localizePath(path: string) {
+	if (!path || (path && path.startsWith('http')) || path === '#') return path;
+	return getRelativeLocaleUrl(lang, path);
+}
+
+const title = "About Us - MusicalDown";
+const description = "Learn about MusicalDown, your ultimate destination for downloading TikTok videos without watermarks. Our mission to simplify creativity with free video downloads.";
+---
+
+<Layout title={title} description={description}>
+	<section class="items-center h-full p-16">
+	<div class="relative p-4">
+    <div class="max-w-6xl mx-auto">
+        <div
+            class="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
+            <div class="">
+               
+                <h1 href="#" class="text-gray-900 font-bold text-4xl">About Us - MusicalDown</h1>
+                
+                <hr>
+                <p class="text-base leading-8 my-5">
+                    Welcome to MusicalDown, your ultimate destination for downloading TikTok videos without watermarks, completely free and effortlessly simple. 
+					Launched in 2024, MusicalDown was created to solve a common frustration: saving TikTok's vibrant videos without clunky apps or distracting watermarks. 
+					Our small team of tech enthusiasts and content lovers came together with a vision to make TikTok's creative magic accessible to everyone, anywhere, on any device. 
+					Whether you're a content creator repurposing viral clips, a student archiving tutorials or a fan preserving a favorite moment, 
+					MusicalDown is designed to make downloading TikTok videos in high-quality MP4 format as easy as a single click. 
+					No sign-ups, no hidden fees—just paste a link and download. Our platform has empowered millions worldwide to save over 10 million videos and we're thrilled to be part of your TikTok journey.
+                </p>
+
+                <h3 class="text-2xl font-bold my-5">Our Mission: Simplifying Creativity</h3>
+
+                <p class="text-base leading-8 my-5">
+                    At MusicalDown, our mission is to empower you to capture and keep the content that inspires you. 
+					We believe TikTok is more than a platform—it's a global stage for creativity, learning, and connection. 
+					That's why we built a web-based tool that's fast, secure, and user-friendly, allowing you to download videos without watermarks in seconds. 
+					From phones to laptops, MusicalDown works seamlessly across devices, ensuring you can save videos for offline viewing, creative projects or personal archives without hassle. 
+					We're here to bridge the gap between TikTok's dynamic ecosystem and your unique needs, all while keeping things free and accessible.
+
+
+                </p>
+
+                <h3 class="text-2xl font-bold my-5">Why Choose MusicalDown?</h3>
+
+                <p class="text-base leading-8 my-5">
+                    What makes MusicalDown stand out? It's our commitment to simplicity, quality, and trust. 
+					Our platform delivers crystal-clear, watermark-free videos that preserve TikTok's original vibrancy. 
+					We prioritize your privacy, never storing personal data or download histories and use secure connections for every download. 
+					MusicalDown supports all TikTok content—videos, reels, stories, and more—making it a versatile tool for creators, marketers and casual users alike. 
+					With no apps to install or subscriptions to pay, we've removed every barrier to let you focus on what matters: the content you love.
+
+
+                </p>
+
+				<h3 class="text-2xl font-bold my-5">Our Vision for the Future</h3>
+
+                <p class="text-base leading-8 my-5">
+                    We're not stopping at downloads. MusicalDown is evolving to become your go-to hub for TikTok creativity, 
+					with plans to introduce features like hashtag generators and content analytics to fuel your ideas. 
+					We're committed to ethical use, encouraging respect for creators' rights and TikTok's policies. 
+					Our team listens to your feedback, constantly improving MusicalDown to meet your needs. 
+					Join our global community and make every TikTok moment yours—download today and experience the freedom of watermark-free, high-quality videos with MusicalDown.
+
+                </p>
+
+                
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+	</section>
+</Layout>

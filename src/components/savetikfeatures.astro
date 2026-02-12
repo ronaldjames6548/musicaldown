@@ -1,0 +1,102 @@
+---
+import Link from "@components/ui/link.astro";
+// Remove old astro-i18next imports
+// import { localizePath } from "astro-i18next";
+// import { t } from "i18next";
+
+// Add new built-in i18n imports
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// @ts-ignore
+import { Icon } from "astro-icon/components";
+
+// Get current language and create translation function
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// Helper function to create localized paths (if needed)
+function localizePath(path: string) {
+	if (!path || (path && path.startsWith('http')) || path === '#') return path;
+	return getRelativeLocaleUrl(lang, path);
+}
+const createMarkup = (text: string) => ({ __html: text });
+const features = [
+	
+];
+---
+
+<div class="relative p-4">
+      <div class="max-w-7xl mx-auto">
+            <div class="feature-box backdrop-blur-sm">
+				<div itemprop="itemListElement" itemscope itemtype="https://schema.org/HowToStep" class="feature-box backdrop-blur-sm">
+					<div class="text-center py-8">
+						<h2 class="text-2xl md:text-3xl font-bold text-gray-900"><span class="text-green-400">{t("st.h2")}</span> {t("st.h2_1")} </h2>
+                        <meta itemprop="url" content="/" />
+                        <meta itemprop="timeRequired" content="PT1M"/>
+						<div class="w-24 h-1 mx-auto bg-green-400 rounded-full"></div>
+						<p class="text-left mt-4 mx-auto text-lg text-gray-900" set:html={t('st.text')} />
+					</div>
+
+
+
+<div class="relative rounded-xl border-grey-200 shadow p-8 md:p-12 mb-12 overflow-hidden group" style="opacity: 1; transform: none;">
+	<div class="absolute inset-0 transition-opacity duration-500"></div>
+		<span class="absolute right-8 top-8 text-8xl font-light text-green-500">SaveTik</span>
+	<div class="relative">
+		<div class="flex items-center gap-4 mb-6">
+			<div class="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-green-600 via-green-500 to-green-400,linear-gradient(315deg,transparent_75%,rgba(0,0,0,0.06)_0)] ">
+							<svg width="64px" height="64px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000" stroke-width="0.01024"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M118.9 388.7h328.6c14.3 0 25.9 11.6 25.9 25.9v208.7c0 14.3-11.6 25.9-25.9 25.9H275.6l-52.1 50.1-54.1-50.1h-50.5c-14.3 0-25.9-11.6-25.9-25.9V414.6c0-14.3 11.6-25.9 25.9-25.9z" fill="#8CAAFF"></path><path d="M223.5 699.2l-54.1-50.1h-50.5c-14.3 0-25.9-11.6-25.9-25.9V414.6c0-14.3 11.6-25.9 25.9-25.9h328.7c14.3 0 25.9 11.6 25.9 25.9v208.7c0 14.3-11.6 25.9-25.9 25.9H275.7l-52.2 50z m-91.7-88.9h52.8l38.4 35.5 37-35.5h174.6V427.5H131.8v182.8z" fill="#333333"></path><path d="M321.6 267.9h508.9c14.3 0 25.9 11.6 25.9 25.9v399c0 14.3-11.6 25.9-25.9 25.9h-177L584 785.5l-72.2-66.8H321.5c-14.3 0-25.9-11.6-25.9-25.9v-399c0.1-14.3 11.7-25.9 26-25.9z" fill="#FFFFFF"></path><path d="M584.4 821.1l-82.6-76.5H321.6c-28.5 0-51.8-23.2-51.8-51.8v-399c0-28.5 23.2-51.8 51.8-51.8h508.9c28.5 0 51.8 23.2 51.8 51.8v399c0 28.5-23.2 51.8-51.8 51.8H663.9l-79.5 76.5zM321.6 293.8v399H522l61.7 57.1 59.4-57.1h187.4v-399H321.6z" fill="#333333"></path><path d="M642.2 509.5H582l-0.2 10.9c-0.3 14.1-11.8 25.4-25.9 25.4h-0.1c-13.8 0-25-11.2-25-25v-0.5l0.7-37.1c0.3-13.8 11.3-24.9 24.9-25.4 0.8-0.1 1.6-0.1 2.4-0.1h57.3v-47.4H520c-14.3 0-25.9-11.6-25.9-25.9s11.6-25.9 25.9-25.9H642c14.3 0 25.9 11.6 25.9 25.9v99.2c0 14.2-11.5 25.7-25.7 25.9z m-112.3 96.1V603c0-14.3 11.6-25.9 25.9-25.9s25.9 11.6 25.9 25.9v2.6c0 14.3-11.6 25.9-25.9 25.9s-25.9-11.6-25.9-25.9z" fill="#333333"></path></g></svg>
+			</div>
+			<h2 class="text-2xl font-medium text-grey-900">{t("st.howh2")}</h2>
+		</div>
+		<div class="grid md:grid-cols-2 gap-8">
+			<div class="space-y-4 text-grey-900 font-light leading-relaxed">
+				<p class="text-lg mb-2" set:html={t('st.text1')} />
+				<p class="text-lg mb-2" set:html={t('st.text2')} />
+				<p class="text-lg mb-2" set:html={t('st.text3')} />
+				<p class="text-lg mb-2" set:html={t('st.text4')} />
+
+
+			</div>
+			
+			<div class="mt-10 max-w-xl space-y-8 text-lg text-gray-900 lg:max-w-none">
+            <div class="relative pl-9">
+              <dt class="inline font-semibold text-gray-900">
+                <div class="flex items-center justify-center rounded-lg bg-linear-to-br from-green-600 via-green-500 to-green-400 shadow-sm h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-10 sm:w-10 text-sm sm:text-base"> 
+				<svg fill="#000000" width="20px" height="20px" viewBox="0 0 24 24" id="copy-3" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" class="icon line"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M15,7h3a1,1,0,0,1,1,1V20a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V17" style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path><path id="primary-2" data-name="primary" d="M14,3H4A1,1,0,0,0,3,4V16a1,1,0,0,0,1,1H14a1,1,0,0,0,1-1V4A1,1,0,0,0,14,3ZM7,4A1,1,0,0,0,8,5h2a1,1,0,0,0,1-1V3H7Z" style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5;"></path></g></svg> </div>
+				{t('sthow.step1')}
+              </dt>
+
+              <dd class="inline"set:html={t('sthow.step1text')} />
+            </div>
+            <div class="relative pl-9">
+              <dt class="inline font-semibold text-gray-900">
+                <div class="flex items-center justify-center rounded-lg bg-linear-to-br from-green-600 via-green-500 to-green-400 shadow-sm h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-10 sm:w-10 text-sm sm:text-base"> 
+				<svg fill="#ffffff" height="18px" width="18px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 62.094 62.094" xml:space="preserve" stroke="#ffffff" stroke-width="1.5523500000000001"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M58.933,28.698l-5.19-5.996V9.854c0-3.044-2.477-5.521-5.521-5.521h-6.29V1c0-0.552-0.448-1-1-1H15.728 c-0.552,0-1,0.448-1,1v3.333h-6.29c-3.044,0-5.521,2.477-5.521,5.521v41.894c0,3.044,2.477,5.521,5.521,5.521h12.098 c0.917,2.798,3.549,4.826,6.649,4.826h24.993c3.859,0,6.999-3.14,6.999-6.999V29.353C59.177,29.112,59.091,28.88,58.933,28.698z M46.305,17.165l9.684,11.188h-4.685c-2.756,0-4.999-2.242-4.999-4.999V17.165z M16.728,2h23.204v5.572H16.728V2z M8.438,55.268 c-1.941,0-3.521-1.58-3.521-3.521V9.854c0-1.941,1.58-3.521,3.521-3.521h6.29v2.24c0,0.552,0.448,1,1,1h25.204c0.552,0,1-0.448,1-1 v-2.24h6.29c1.941,0,3.521,1.58,3.521,3.521v10.538l-5.682-6.564c-0.19-0.22-0.466-0.346-0.756-0.346h-18.12 c-3.859,0-6.999,3.139-6.999,6.998v34.616c0,0.058,0.007,0.115,0.009,0.172H8.438z M52.178,60.094H27.185 c-2.756,0-4.999-2.242-4.999-4.999V20.479c0-2.756,2.242-4.998,4.999-4.998h17.12v7.873c0,3.859,3.14,6.999,6.999,6.999h5.873 v24.743C57.177,57.852,54.935,60.094,52.178,60.094z"></path> </g></svg> </div>
+				{t('sthow.step2')}
+              </dt>
+              <dd class="inline"set:html={t('sthow.step2text')} />
+            </div>
+            <div class="relative pl-9">
+              <dt class="inline font-semibold text-gray-900">
+                <div class="flex items-center justify-center rounded-lg bg-linear-to-br from-green-600 via-green-500 to-green-400 shadow-sm h-8 w-8 min-[360px]:h-9 min-[360px]:w-9 sm:h-10 sm:w-10 text-sm sm:text-base"> 
+				<svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C11.5858 1.25 11.25 1.58579 11.25 2V12.9726L9.56944 11.0119C9.29988 10.6974 8.8264 10.661 8.51191 10.9306C8.19741 11.2001 8.16099 11.6736 8.43056 11.9881L11.4306 15.4881C11.573 15.6543 11.7811 15.75 12 15.75C12.2189 15.75 12.427 15.6543 12.5694 15.4881L15.5694 11.9881C15.839 11.6736 15.8026 11.2001 15.4881 10.9306C15.1736 10.661 14.7001 10.6974 14.4306 11.0119L12.75 12.9726L12.75 2C12.75 1.58579 12.4142 1.25 12 1.25Z" fill="#ffffff"></path> <path d="M14.25 9V9.37828C14.9836 9.11973 15.8312 9.2491 16.4642 9.79167C17.4077 10.6004 17.517 12.0208 16.7083 12.9643L13.7083 16.4643C13.2808 16.963 12.6568 17.25 12 17.25C11.3431 17.25 10.7191 16.963 10.2916 16.4643L7.29163 12.9643C6.48293 12.0208 6.5922 10.6004 7.53568 9.79167C8.16868 9.2491 9.01637 9.11973 9.74996 9.37828V9H8C5.17157 9 3.75736 9 2.87868 9.87868C2 10.7574 2 12.1716 2 15V16C2 18.8284 2 20.2426 2.87868 21.1213C3.75736 22 5.17157 22 7.99999 22H16C18.8284 22 20.2426 22 21.1213 21.1213C22 20.2426 22 18.8284 22 16V15C22 12.1716 22 10.7574 21.1213 9.87868C20.2426 9 18.8284 9 16 9H14.25Z" fill="#ffffff"></path> </g></svg></div>
+				{t('sthow.step3')}
+              </dt>
+              <dd class="inline"set:html={t('sthow.step3text')} />
+            </div>
+          </div>
+		  
+		  
+</div>
+</div>
+</div>
+
+
+
+
+
+</div>
+<!--Sention 1 End -->

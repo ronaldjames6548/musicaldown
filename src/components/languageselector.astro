@@ -1,0 +1,111 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+import { languages } from "../i18n/ui";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+
+// Filter languages to only your 4 supported ones
+const activeLanguages = {
+  en: "English",
+  vi: "Tiếng Việt",
+  id: "Bahasa Indonesia",
+  ms: "Bahasa Melayu"
+};
+
+const safeUrl = Astro.request?.url 
+  ? new URL(Astro.request.url) 
+  : new URL('/', Astro.site ?? 'http://localhost:4321');
+
+const currentLang = getLangFromUrl(safeUrl);
+const currentPath = safeUrl.pathname;
+
+const flagMapping = {
+  en: "🇺🇸",
+  vi: "🇻🇳",
+  id: "🇮🇩",
+  ms: "🇲🇾",
+};
+
+// Helper to strip locale prefix from path to generate correct links
+function getBasePath(path: string, lang: string) {
+  if (lang === 'en') return path;
+  const segment = `/${lang}`;
+  if (path.startsWith(segment)) {
+    return path.substring(segment.length) || '/';
+  }
+  return path;
+}
+
+const basePath = getBasePath(currentPath, currentLang);
+
+const languageOptions = Object.entries(activeLanguages).map(([code, name]) => {
+  return {
+    code,
+    name,
+    flag: flagMapping[code as keyof typeof flagMapping] || "🌐",
+    url: getRelativeLocaleUrl(code, basePath),
+    isCurrent: code === currentLang,
+  };
+});
+
+const currentOption = languageOptions.find(opt => opt.isCurrent) || languageOptions[0];
+---
+
+<div class="relative inline-block text-left" id="language-container">
+  <button
+    type="button"
+    id="lang-btn"
+    class="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+  >
+    <Icon name="ion:language" class="w-4 h-4" />
+    <span>{currentOption.flag} {currentOption.name}</span>
+    <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+  </button>
+
+  <div
+    id="lang-menu"
+    class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
+  >
+    <div class="py-1" role="menu">
+      {languageOptions.map(option => (
+        <button
+          data-locale={option.code}
+          data-url={option.url}
+          class={`flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${option.isCurrent ? 'bg-blue-50 font-bold' : ''}`}
+          role="menuitem"
+        >
+          <span class="mr-2">{option.flag}</span> {option.name}
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('lang-btn');
+  const menu = document.getElementById('lang-menu');
+  const options = document.querySelectorAll('#lang-menu button');
+
+  // Toggle Menu
+  btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+
+  // Handle Selection
+  options.forEach(opt => {
+    opt.addEventListener('click', () => {
+      const locale = opt.getAttribute('data-locale');
+      const url = opt.getAttribute('data-url');
+      if (locale && url) {
+        // Set cookie for 1 year
+        document.cookie = `user-locale=${locale}; path=/; max-age=31536000; SameSite=Lax`;
+        window.location.href = url;
+      }
+    });
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!document.getElementById('language-container')?.contains(e.target as Node)) {
+      menu?.classList.add('hidden');
+    }
+  });
+</script>

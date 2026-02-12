@@ -1,0 +1,27 @@
+---
+import Container from "@components/container.astro";
+import Layout from "@layouts/Layout.astro";
+import Hero from "@components/md-hero.astro";
+import Features from "@components/mdfeatures.astro";
+import Faq from "@components/mdfaq.astro";
+
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// SEO/props: Matched to ui.ts structure (flat keys under language)
+const title = t('site.title') ?? 'MusicallyDown - Tải Video TikTok Không Logo Trong Vài Giây';
+const description = t('site.description') ?? 'MusicalDown là công cụ tải TikTok mạnh mẽ giúp bạn lưu video TikTok không logo chất lượng HD. MusicallyDown - Tải video TikTok định dạng MP4 hoặc trích xuất âm thanh MP3. Miễn phí, nhanh chóng, dễ sử dụng - không cần đăng ký.';
+const keywords = t('site.keywords') ?? 'musical down, musicallydown, TikTokio, tải video TikTok online, tải video TikTok, tải TikTok không giới hạn, tải TikTok miễn phí, lưu video TikTok, tải TikTok online';
+const image = 'meta/opengraph.webp';  
+const variant = 'vi';
+---
+<Layout title={title} description={description} keywords={keywords} image={image} variant={variant} dir={lang === 'vi' ? 'ltr' : 'ltr'}>
+<Hero />
+	<Container>
+		
+		<Features />
+		<Faq />
+	</Container>
+</Layout>

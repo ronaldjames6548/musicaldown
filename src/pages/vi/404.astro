@@ -1,0 +1,48 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Hero from "@components/hero.astro";
+import Container from "@components/container.astro"; 
+// Add new built-in i18n imports
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// Get current language and create translation function
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// Helper function to create localized paths
+function localizePath(path: string) {
+	if (!path || (path && path.startsWith('http')) || path === '#') return path;
+	return getRelativeLocaleUrl(lang, path);
+}
+
+
+// SEO/props: Matched to ui.ts structure (flat keys under language)
+const title = 'Lỗi 404 - MusicallyDown - Tải xuống video TikTok không có hình mờ chỉ trong vài giây';
+const description = 'Ôi! Trang này đã trải qua một cuộc phiêu lưu bất ngờ. Có vẻ như bạn đang cố gắng truy cập một trang không tồn tại (hoặc đã được di chuyển).';
+const image = 'meta/opengraph.webp';  // Static; add to ui.ts if i18n needed (e.g., t('site.tvd_image'))
+const variant = '404';
+---
+
+<Layout title={title} description={description} image={image} variant={variant} lang={lang}>
+<Hero />
+
+	<Container>
+		<section class="flex items-center h-full p-16">
+			<div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
+				<div class="max-w-md text-center">
+					
+					<h2 class="mb-8 font-bold text-9xl">
+						<span class="sr-only">Lỗi</span>
+						<span class="text-primary">404</span>
+					</h2>
+					<p class="text-3xl font-semibold md:text-3xl">Rất tiếc, chúng tôi không tìm thấy trang này.</p>
+					<p class="mt-4 mb-8 text-lg text-muted">Nhưng đừng lo, bạn có thể tìm thấy rất nhiều thứ khác trên trang chủ của mình.</p>
+					<a rel="noopener noreferrer" href={localizePath("/")} class="btn ml-4">Quay lại trang chủ</a>
+				</div>
+			</div>
+		</section>
+	</Container>
+</Layout>

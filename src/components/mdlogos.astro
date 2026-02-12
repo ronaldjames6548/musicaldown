@@ -1,0 +1,110 @@
+---
+import Link from "@components/ui/link.astro";
+// Remove old astro-i18next imports
+// import { localizePath } from "astro-i18next";
+// import { t } from "i18next";
+
+// Add new built-in i18n imports
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// @ts-ignore
+import { Icon } from "astro-icon/components";
+
+// Get current language and create translation function
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// Helper function to create localized paths (if needed)
+function localizePath(path: string) {
+	if (!path || (path && path.startsWith('http')) || path === '#') return path;
+	return getRelativeLocaleUrl(lang, path);
+}
+const createMarkup = (text: string) => ({ __html: text });
+const features = [
+	
+];
+---
+
+<div class="relative p-4">
+      <div class="max-w-screen-xl mx-auto">
+            <div class="feature-box backdrop-blur-sm">
+<section id="features" class="2xl:py-[60px] py-[50px] relative p-8">
+    
+    <div class="max-w-7xl mx-auto bg-gray-800 rounded-2xl p-12">
+        <!-- Title -->
+        <h2 class="text-3xl md:text-4xl font-semibold text-white text-center mb-12">{t('md.featureh')}</h2>
+        
+        <!-- Features Grid -->
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+            <!-- Left Column -->
+            <div class="space-y-6">
+                <!-- Feature 1 -->
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <p class="text-gray-200 text-base md:text-lg leading-relaxed">
+                        {t('md.feature1')}
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <p class="text-gray-200 text-base md:text-lg leading-relaxed">
+                        {t('md.feature2')}
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <p class="text-gray-200 text-base md:text-lg leading-relaxed">
+                        {t('md.feature3')}
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="space-y-6">
+                <!-- Feature 4 -->
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <p class="text-gray-200 text-base md:text-lg leading-relaxed" set:html={t('md.feature4')} />
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <p class="text-gray-200 text-base md:text-lg leading-relaxed">
+                        {t('md.feature5')}
+                    </p>
+
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <p class="text-gray-200 text-base md:text-lg leading-relaxed">
+                        {t('md.feature6')}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+</section>
+
+
+

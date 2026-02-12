@@ -1,0 +1,27 @@
+---
+import Container from "@components/container.astro";
+import Layout from "@layouts/Layout.astro";
+import Hero from "@components/md-hero.astro";
+import Features from "@components/mdfeatures.astro";
+import Faq from "@components/mdfaq.astro";
+
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// SEO/props: Matched to ui.ts structure (flat keys under language)
+const title = t('site.title') ?? 'MusicallyDown - Download TikTok Videos Without Watermark in HD Quality';
+const description = t('site.description') ?? 'MusicallyDown is a powerful TikTok downloader that lets you save TikTok videos without watermark in HD quality. Download TikTok videos in MP4 format or extract audio as MP3 files. Musical Down is Free, fast and easy to use - no registration required.';
+const keywords = t('site.keywords') ?? 'tiktok video downloader, download tiktok videos, tiktok hd downloader, no watermark tiktok, tiktokiocam';
+const image = 'meta/opengraph.webp';  // Static; add to ui.ts if i18n needed (e.g., t('site.tvd_image'))
+const variant = 'id';
+---
+<Layout title={title} description={description} keywords={keywords} image={image} variant={variant} dir={lang === 'id' ? 'ltr' : 'ltr'}>
+<Hero />
+	<Container>
+		
+		<Features />
+		<Faq />
+	</Container>
+</Layout>

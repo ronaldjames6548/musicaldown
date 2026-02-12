@@ -1,0 +1,82 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+// Remove old astro-i18next imports
+// import { localizePath } from "astro-i18next";
+// import { changeLanguage } from "i18next";
+// changeLanguage("en");
+
+// Add new built-in i18n imports
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// Get current language and create translation function
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// Helper function to create localized paths
+function localizePath(path: string) {
+	if (!path || (path && path.startsWith('http')) || path === '#') return path;
+	return getRelativeLocaleUrl(lang, path);
+}
+
+const title = "Về Chúng Tôi - MusicalDown";
+const description = "MusicalDown là công cụ tải video TikTok hàng đầu giúp bạn lưu video không watermark chất lượng cao. Chúng tôi cam kết mang đến trải nghiệm tải xuống miễn phí, an toàn và đơn giản nhất để hỗ trợ sự sáng tạo của bạn.";---
+
+<Layout title={title} description={description}>
+	<section class="items-center h-full p-16">
+	<div class="relative p-4">
+    <div class="max-w-6xl mx-auto">
+        <div
+            class="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
+            <div class="">
+    <h2 href="#" class="text-gray-900 font-bold text-4xl">Giới Thiệu - MusicalDown</h2>
+    
+    <hr>
+    <p class="text-base leading-8 my-5">
+        Chào mừng bạn đến với MusicalDown – điểm đến lý tưởng để tải video TikTok không logo, hoàn toàn miễn phí và cực kỳ đơn giản.
+        Ra mắt vào năm 2024, MusicalDown được tạo ra để giải quyết một vấn đề phổ biến: lưu giữ những video TikTok sống động mà không cần ứng dụng rườm rà hay logo phiền phức.
+        Đội ngũ nhỏ gồm những người đam mê công nghệ và yêu thích nội dung đã cùng nhau xây dựng tầm nhìn: mang phép màu sáng tạo của TikTok đến với mọi người, ở bất kỳ đâu, trên mọi thiết bị.
+        Dù bạn là người sáng tạo nội dung muốn tái sử dụng clip viral, học sinh lưu trữ bài giảng, hay người hâm mộ muốn giữ lại khoảnh khắc yêu thích,
+        MusicalDown được thiết kế để việc tải video TikTok chất lượng cao định dạng MP4 chỉ cần một cú nhấp chuột.
+        Không cần đăng ký, không phí ẩn – chỉ cần dán link và tải ngay. Nền tảng của chúng tôi đã giúp hàng triệu người trên toàn thế giới lưu hơn 10 triệu video và chúng tôi rất vui khi đồng hành cùng hành trình TikTok của bạn.
+    </p>
+    
+    <h3 class="text-2xl font-bold my-5">Sứ Mệnh Của Chúng Tôi: Đơn Giản Hóa Sự Sáng Tạo</h3>
+    <p class="text-base leading-8 my-5">
+        Tại MusicalDown, sứ mệnh của chúng tôi là trao quyền cho bạn lưu giữ và sở hữu những nội dung truyền cảm hứng.
+        Chúng tôi tin rằng TikTok không chỉ là một nền tảng – mà là sân khấu toàn cầu cho sự sáng tạo, học hỏi và kết nối.
+        Đó là lý do chúng tôi xây dựng một công cụ dựa trên web nhanh chóng, an toàn và thân thiện với người dùng, giúp bạn tải video không logo chỉ trong vài giây.
+        Từ điện thoại đến laptop, MusicalDown hoạt động mượt mà trên mọi thiết bị, đảm bảo bạn có thể lưu video để xem offline, làm dự án sáng tạo hoặc lưu trữ cá nhân mà không gặp rắc rối.
+        Chúng tôi ở đây để kết nối hệ sinh thái năng động của TikTok với nhu cầu riêng biệt của bạn, tất cả đều miễn phí và dễ tiếp cận.
+    </p>
+    
+    <h3 class="text-2xl font-bold my-5">Tại Sao Nên Chọn MusicalDown?</h3>
+    <p class="text-base leading-8 my-5">
+        Điều gì khiến MusicalDown nổi bật? Đó là cam kết về sự đơn giản, chất lượng và lòng tin.
+        Nền tảng của chúng tôi mang đến video sắc nét, không logo, giữ nguyên sự sống động ban đầu của TikTok.
+        Chúng tôi luôn ưu tiên quyền riêng tư của bạn, không lưu trữ dữ liệu cá nhân hay lịch sử tải xuống, và sử dụng kết nối an toàn cho mọi lượt tải.
+        MusicalDown hỗ trợ mọi loại nội dung TikTok – video, reels, stories và hơn thế nữa – trở thành công cụ đa năng cho người sáng tạo, marketer lẫn người dùng thông thường.
+        Không cần cài ứng dụng, không cần trả phí đăng ký, chúng tôi đã loại bỏ mọi rào cản để bạn tập trung vào điều quan trọng nhất: nội dung bạn yêu thích.
+    </p>
+    
+    <h3 class="text-2xl font-bold my-5">Tầm Nhìn Tương Lai</h3>
+    <p class="text-base leading-8 my-5">
+        Chúng tôi không dừng lại ở việc tải video. MusicalDown đang phát triển để trở thành trung tâm sáng tạo TikTok của bạn,
+        với kế hoạch bổ sung các tính năng như công cụ tạo hashtag và phân tích nội dung để thúc đẩy ý tưởng của bạn.
+        Chúng tôi cam kết sử dụng có đạo đức, khuyến khích tôn trọng quyền của người sáng tạo và chính sách của TikTok.
+        Đội ngũ luôn lắng nghe phản hồi từ bạn để không ngừng cải thiện MusicalDown, đáp ứng tốt hơn nhu cầu thực tế.
+        Hãy tham gia cộng đồng toàn cầu của chúng tôi và biến mọi khoảnh khắc TikTok thành của riêng bạn – tải ngay hôm nay và trải nghiệm sự tự do với video chất lượng cao, không logo cùng MusicalDown.
+    </p>
+</div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+	</section>
+</Layout>

@@ -1,0 +1,97 @@
+---
+import Link from "@components/ui/link.astro";
+// Remove old astro-i18next imports
+// import { localizePath } from "astro-i18next";
+// import { t } from "i18next";
+
+// Add new built-in i18n imports
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// @ts-ignore
+import { Icon } from "astro-icon/components";
+
+// Get current language and create translation function
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// Helper function to create localized paths (if needed)
+function localizePath(path: string) {
+	if (!path || (path && path.startsWith('http')) || path === '#') return path;
+	return getRelativeLocaleUrl(lang, path);
+}
+
+const features = [
+	
+];
+---
+
+<div class="relative p-4">
+      <div class="max-w-screen-xl mx-auto">
+            <div class="rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
+		<section class="py-8 bg-muted/30">
+			<div class="container">
+				<div class="mb-12">
+					<h2 class="text-3xl md:text-4xl text-center text-gray-800 font-bold mb-4" set:html={t('tvd.h2')} /> 
+					<p class="text-lg text-muted-foreground mx-auto" set:html={t('tvd.text')} />
+				</div>
+
+			<div class="grid gap-8 md:grid-cols-3">
+				<div class="relative text-center">
+					<div class="hidden md:block absolute top-16 left-1/2 w-full h-0.5 bg-gradient-to-r from-sky-400 to-indigo-600"></div>
+					<div class="relative z-10">
+						<div class="mx-auto h-20 w-20 rounded-2xl bg-blue-100 flex items-center justify-center mb-6 transition-transform hover:scale-105">
+							<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 15 15">
+							<path fill="#0089ff" d="M10 4V2.5a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5H4V5.5A1.5 1.5 0 0 1 5.5 4zM5.5 5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5zm7-1A1.5 1.5 0 0 1 14 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 4 12.5V11H2.5A1.5 1.5 0 0 1 1 9.5v-7A1.5 1.5 0 0 1 2.5 1h7A1.5 1.5 0 0 1 11 2.5V4z"/>
+							</svg>
+						</div>
+
+						<div class="text-sm font-bold text-blue-600 text-primary mb-2">01</div>
+						<h3 class="font-semibold text-xl mb-2" set:html={t('tvd.how1')} />
+						<p class="text-muted-foreground text-lg max-w-xs mx-auto" set:html={t('tvd.how1text')} />
+					</div>
+					</div>
+
+				<div class="relative text-center">
+					<div class="hidden md:block absolute top-16 left-1/2 w-full h-0.5 bg-gradient-to-r from-sky-400 to-indigo-600"></div>
+					<div class="relative z-10">
+						<div class="mx-auto h-20 w-20 rounded-2xl bg-blue-100 flex items-center justify-center mb-6 transition-transform hover:scale-105">
+							<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24"><g fill="none" stroke="#0089ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+								<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+								<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></g>
+							</svg>
+						</div>
+						<div class="text-sm font-bold text-blue-600 text-primary mb-2">02</div>
+						<h3 class="font-semibold text-xl mb-2" set:html={t('tvd.how2')} />
+						<p class="text-muted-foreground text-lg max-w-xs mx-auto" set:html={t('tvd.how2text')} />
+					</div>
+</div>
+
+<div class="relative text-center">
+<div class="relative z-10">
+<div class="mx-auto h-20 w-20 rounded-2xl bg-blue-100 flex items-center justify-center mb-6 transition-transform hover:scale-105">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 256 256">
+<path fill="#0089ff" d="M71.51 88.49a12 12 0 0 1 17-17L116 99V24a12 12 0 0 1 24 0v75l27.51-27.52a12 12 0 0 1 17 17l-48 48a12 12 0 0 1-17 0ZM224 116h-36a12 12 0 0 0 0 24h32v56H36v-56h32a12 12 0 0 0 0-24H32a20 20 0 0 0-20 20v64a20 20 0 0 0 20 20h192a20 20 0 0 0 20-20v-64a20 20 0 0 0-20-20m-20 52a16 16 0 1 0-16 16a16 16 0 0 0 16-16"/>
+</svg>
+
+</div>
+
+<div class="text-sm font-bold text-blue-600 text-primary mb-2">03</div>
+<h3 class="font-semibold text-xl mb-2" set:html={t('tvd.how3')} />
+<p class="text-muted-foreground text-lg max-w-xs mx-auto" set:html={t('tvd.how3text')} />
+</div>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+      </div>
+      </div>
+
+
+
+<!--Sention 1 End -->
+
