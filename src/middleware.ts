@@ -18,22 +18,16 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
   const { pathname } = url;
 
-  // 1. Skip static assets and internal routes
-  if (
-    pathname.includes('.') || 
-    pathname.startsWith('/api/') || 
-    pathname.startsWith('/_') || 
-    pathname.startsWith('/admin/')
-  ) {
+  // 1. Skip static assets/APIs
+  if (pathname.includes('.') || pathname.startsWith('/api/') || pathname.startsWith('/_')) {
     return next();
   }
 
-  // 2. Check if the URL already starts with a supported locale
   const firstSegment = pathname.split('/').filter(Boolean)[0];
   const isLocalized = supportedLocales.includes(firstSegment as any);
 
-  // 3. If NOT localized and at the root or a generic path, check for redirect
-  if (!isLocalized) {
+  // 2. Auto-Redirect Logic
+  if (!isLocalized && pathname === '/') {
     const localeCookie = context.cookies.get('user-locale')?.value;
     const countryHeader = context.request.headers.get('x-vercel-ip-country');
     const detectedGeoLocale = getLocaleFromCountry(countryHeader);
@@ -43,16 +37,16 @@ export const onRequest = defineMiddleware(async (context, next) => {
       : detectedGeoLocale;
 
     if (targetLocale && targetLocale !== defaultLocale) {
-      return context.redirect(`/${targetLocale}${pathname === '/' ? '' : pathname}${url.search}`, 302);
+      return context.redirect(`/${targetLocale}${pathname === '/' ? '' : pathname}`, 302);
     }
   }
 
-  // 4. Handle 404s for localized routes
+  // 3. Handle 404s for Localized Routes
   const response = await next();
-  
-  // If we get a 404 on a /vi/something path, make sure it shows the localized 404 page
-  if (response.status === 404 && isLocalized) {
-      return context.redirect(`/${firstSegment}/404`);
+  if (response.status === 404) {
+    const locale = isLocalized ? firstSegment : defaultLocale;
+    // Redirect to /vi/404 or /404
+    return context.redirect(locale === 'en' ? '/404' : `/${locale}/404`);
   }
 
   return response;
