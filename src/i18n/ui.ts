@@ -14,7 +14,7 @@ export const ui = {
   
   // Main Site metadata
 	'site.title': 'MusicallyDown - Download TikTok Videos Without Watermark in Seconds',
-    'site.description': 'MusicalDown is a powerful TikTok downloader that lets you save TikTok videos without watermark in HD quality. MusicallyDown - Download TikTok videos in MP4 format or extract audio as MP3 files. Free, fast and easy to use - no registration required.',
+    'site.description': 'MusicalDown is powerful TikTok downloader to save TikTok videos without watermark in HD quality. MusicallyDown - Download TikTok videos free, fast and easy.',
 	'site.keywords': 'musical down, TikTokio, TikTok video downloader online, download TikTok video, Unlimited TikTok downloads, free TikTok downloader, save TikTok videos, TikTok downloader online',
 
 	// TikTok Video Downloader Page metadata
