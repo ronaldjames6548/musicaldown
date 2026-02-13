@@ -1,0 +1,379 @@
+---
+// src/pages/debug-blog-links.astro
+// Diagnostic page to check all blog links and URLs
+// Access at: http://localhost:4321/debug-blog-links
+
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+
+// Get ALL blog posts
+const allPosts = await getCollection("blog");
+
+// Organize posts by language
+const postsByLanguage = {
+  en: allPosts.filter(p => p.id.startsWith('en/')),
+  vi: allPosts.filter(p => p.id.startsWith('vi/')),
+  id: allPosts.filter(p => p.id.startsWith('id/')),
+  ms: allPosts.filter(p => p.id.startsWith('ms/')),
+};
+
+// Function to generate clean slug
+function getCleanSlug(id: string, lang: string): string {
+  return id.replace(`${lang}/`, '').replace('.md', '');
+}
+
+// Generate all expected URLs
+const allUrls: { lang: string; type: string; title: string; url: string; postId: string; slug: string; cleanSlug: string; status: 'correct' | 'warning' }[] = [];
+
+Object.entries(postsByLanguage).forEach(([lang, posts]) => {
+  posts.forEach(post => {
+    const cleanSlug = getCleanSlug(post.id, lang);
+    
+    // List page URL
+    allUrls.push({
+      lang,
+      type: 'List Page',
+      title: `${lang.toUpperCase()} Blog List`,
+      url: lang === 'en' ? '/blog' : `/${lang}/blog`,
+      postId: '-',
+      slug: '-',
+      cleanSlug: '-',
+      status: 'correct'
+    });
+    
+    // Individual post URL
+    const postUrl = lang === 'en' ? `/blog/${cleanSlug}` : `/${lang}/blog/${cleanSlug}`;
+    const hasDoublePrefix = postUrl.includes(`/${lang}/${lang}/`);
+    
+    allUrls.push({
+      lang,
+      type: 'Post Page',
+      title: post.data.title,
+      url: postUrl,
+      postId: post.id,
+      slug: post.slug,
+      cleanSlug: cleanSlug,
+      status: hasDoublePrefix ? 'warning' : 'correct'
+    });
+  });
+});
+
+// Remove duplicate list pages
+const uniqueUrls = allUrls.filter((url, index, self) => 
+  index === self.findIndex(u => u.url === url.url)
+);
+
+// Separate by status
+const correctUrls = uniqueUrls.filter(u => u.status === 'correct');
+const warningUrls = uniqueUrls.filter(u => u.status === 'warning');
+
+// Group by language for better organization
+const urlsByLang = {
+  en: uniqueUrls.filter(u => u.lang === 'en'),
+  vi: uniqueUrls.filter(u => u.lang === 'vi'),
+  id: uniqueUrls.filter(u => u.lang === 'id'),
+  ms: uniqueUrls.filter(u => u.lang === 'ms'),
+};
+---
+
+<Layout title="Blog Links Checker">
+  <Container>
+    <div class="py-10">
+      <h1 class="text-4xl font-bold mb-8">📋 Blog Links Checker</h1>
+      
+      <!-- Summary Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-blue-100 dark:bg-blue-900 p-6 rounded-lg">
+          <div class="text-3xl font-bold text-blue-600 dark:text-blue-300">{allPosts.length}</div>
+          <div class="text-sm text-blue-800 dark:text-blue-200">Total Posts</div>
+        </div>
+        
+        <div class="bg-green-100 dark:bg-green-900 p-6 rounded-lg">
+          <div class="text-3xl font-bold text-green-600 dark:text-green-300">{correctUrls.length}</div>
+          <div class="text-sm text-green-800 dark:text-green-200">Correct URLs</div>
+        </div>
+        
+        <div class="bg-yellow-100 dark:bg-yellow-900 p-6 rounded-lg">
+          <div class="text-3xl font-bold text-yellow-600 dark:text-yellow-300">{warningUrls.length}</div>
+          <div class="text-sm text-yellow-800 dark:text-yellow-200">Warnings</div>
+        </div>
+        
+        <div class="bg-purple-100 dark:bg-purple-900 p-6 rounded-lg">
+          <div class="text-3xl font-bold text-purple-600 dark:text-purple-300">{uniqueUrls.length}</div>
+          <div class="text-sm text-purple-800 dark:text-purple-200">Total URLs</div>
+        </div>
+      </div>
+
+      <!-- Posts by Language -->
+      <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg mb-8">
+        <h2 class="text-2xl font-bold mb-4">Posts by Language</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div>
+            <span class="font-bold">English:</span> {postsByLanguage.en.length} posts
+          </div>
+          <div>
+            <span class="font-bold">Vietnamese:</span> {postsByLanguage.vi.length} posts
+          </div>
+          <div>
+            <span class="font-bold">Indonesian:</span> {postsByLanguage.id.length} posts
+          </div>
+          <div>
+            <span class="font-bold">Malay:</span> {postsByLanguage.ms.length} posts
+          </div>
+        </div>
+      </div>
+
+      <!-- Warnings Section -->
+      {warningUrls.length > 0 && (
+        <div class="bg-red-50 dark:bg-red-900 border-2 border-red-500 p-6 rounded-lg mb-8">
+          <h2 class="text-2xl font-bold text-red-600 dark:text-red-300 mb-4">
+            ⚠️ Warnings Found ({warningUrls.length})
+          </h2>
+          <div class="space-y-4">
+            {warningUrls.map(url => (
+              <div class="bg-white dark:bg-gray-800 p-4 rounded">
+                <div class="font-bold text-red-600">{url.title}</div>
+                <div class="text-sm mt-2">
+                  <span class="font-mono bg-red-100 dark:bg-red-800 px-2 py-1 rounded">{url.url}</span>
+                </div>
+                <div class="text-xs text-red-600 mt-2">
+                  Issue: URL contains double language prefix
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- All URLs by Language -->
+      <div class="space-y-8">
+        {Object.entries(urlsByLang).map(([lang, urls]) => (
+          urls.length > 0 && (
+            <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+              <div class="bg-gradient-to-r from-blue-500 to-purple-500 p-4">
+                <h2 class="text-2xl font-bold text-white">
+                  {lang === 'en' ? '🇬🇧 English' : lang === 'vi' ? '🇻🇳 Vietnamese' : lang === 'id' ? '🇮🇩 Indonesian' : '🇲🇾 Malay'}
+                  <span class="ml-3 text-sm font-normal">({urls.length} URLs)</span>
+                </h2>
+              </div>
+              
+              <div class="p-6">
+                <div class="overflow-x-auto">
+                  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead>
+                      <tr class="bg-gray-50 dark:bg-gray-800">
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Type</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Title</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">URL</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Status</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Test</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                      {urls.map((url) => (
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
+                          <td class="px-4 py-3 text-sm">
+                            <span class={`px-2 py-1 rounded text-xs font-medium ${
+                              url.type === 'List Page' 
+                                ? 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100' 
+                                : 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100'
+                            }`}>
+                              {url.type}
+                            </span>
+                          </td>
+                          <td class="px-4 py-3 text-sm max-w-xs truncate" title={url.title}>
+                            {url.title}
+                          </td>
+                          <td class="px-4 py-3 text-sm">
+                            <code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-xs">
+                              {url.url}
+                            </code>
+                          </td>
+                          <td class="px-4 py-3 text-sm">
+                            {url.status === 'correct' ? (
+                              <span class="text-green-600 dark:text-green-400">✓ OK</span>
+                            ) : (
+                              <span class="text-red-600 dark:text-red-400">⚠ Warning</span>
+                            )}
+                          </td>
+                          <td class="px-4 py-3 text-sm">
+                            <a 
+                              href={url.url} 
+                              target="_blank"
+                              class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200 underline"
+                            >
+                              Test →
+                            </a>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )
+        ))}
+      </div>
+
+      <!-- Detailed Post Information -->
+      <div class="mt-8 bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-4">
+          <h2 class="text-2xl font-bold text-white">📝 Detailed Post Information</h2>
+        </div>
+        
+        <div class="p-6">
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
+              <thead>
+                <tr class="bg-gray-50 dark:bg-gray-800">
+                  <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Lang</th>
+                  <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Post ID</th>
+                  <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Original Slug</th>
+                  <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Clean Slug</th>
+                  <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Draft</th>
+                  <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Title</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                {allPosts.map((post) => {
+                  const lang = post.id.split('/')[0];
+                  const cleanSlug = getCleanSlug(post.id, lang);
+                  
+                  return (
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
+                      <td class="px-3 py-2">
+                        <span class="font-mono text-xs bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">{lang}</span>
+                      </td>
+                      <td class="px-3 py-2 font-mono text-xs">{post.id}</td>
+                      <td class="px-3 py-2 font-mono text-xs max-w-xs truncate" title={post.slug}>
+                        {post.slug}
+                      </td>
+                      <td class="px-3 py-2">
+                        <code class="text-xs bg-green-100 dark:bg-green-800 px-2 py-1 rounded">
+                          {cleanSlug}
+                        </code>
+                      </td>
+                      <td class="px-3 py-2">
+                        {post.data.draft ? (
+                          <span class="text-red-600">Yes</span>
+                        ) : (
+                          <span class="text-green-600">No</span>
+                        )}
+                      </td>
+                      <td class="px-3 py-2 max-w-md truncate" title={post.data.title}>
+                        {post.data.title}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="mt-8 bg-blue-50 dark:bg-blue-900 p-6 rounded-lg">
+        <h2 class="text-xl font-bold mb-4">🔗 Quick Test Links</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <h3 class="font-bold mb-2">English</h3>
+            <ul class="space-y-1">
+              <li><a href="/blog" class="text-blue-600 hover:underline">/blog</a></li>
+              {postsByLanguage.en.slice(0, 2).map(post => (
+                <li>
+                  <a href={`/blog/${getCleanSlug(post.id, 'en')}`} class="text-blue-600 hover:underline text-sm truncate block">
+                    /blog/{getCleanSlug(post.id, 'en').substring(0, 30)}...
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="font-bold mb-2">Vietnamese</h3>
+            <ul class="space-y-1">
+              <li><a href="/vi/blog" class="text-blue-600 hover:underline">/vi/blog</a></li>
+              {postsByLanguage.vi.slice(0, 2).map(post => (
+                <li>
+                  <a href={`/vi/blog/${getCleanSlug(post.id, 'vi')}`} class="text-blue-600 hover:underline text-sm truncate block">
+                    /vi/blog/{getCleanSlug(post.id, 'vi').substring(0, 25)}...
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="font-bold mb-2">Indonesian</h3>
+            <ul class="space-y-1">
+              <li><a href="/id/blog" class="text-blue-600 hover:underline">/id/blog</a></li>
+              {postsByLanguage.id.slice(0, 2).map(post => (
+                <li>
+                  <a href={`/id/blog/${getCleanSlug(post.id, 'id')}`} class="text-blue-600 hover:underline text-sm truncate block">
+                    /id/blog/{getCleanSlug(post.id, 'id').substring(0, 25)}...
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="font-bold mb-2">Malay</h3>
+            <ul class="space-y-1">
+              <li><a href="/ms/blog" class="text-blue-600 hover:underline">/ms/blog</a></li>
+              {postsByLanguage.ms.slice(0, 2).map(post => (
+                <li>
+                  <a href={`/ms/blog/${getCleanSlug(post.id, 'ms')}`} class="text-blue-600 hover:underline text-sm truncate block">
+                    /ms/blog/{getCleanSlug(post.id, 'ms').substring(0, 25)}...
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <div class="mt-8 bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
+        <h2 class="text-xl font-bold mb-4">📖 How to Use This Page</h2>
+        <ul class="list-disc list-inside space-y-2 text-sm">
+          <li><strong>Check Summary Stats:</strong> See total posts and URL counts at the top</li>
+          <li><strong>Look for Warnings:</strong> Red warnings indicate double language prefixes in URLs</li>
+          <li><strong>Test Links:</strong> Click "Test →" button to open each URL in a new tab</li>
+          <li><strong>Verify Clean Slugs:</strong> Green highlighted slugs show the cleaned version without language prefix</li>
+          <li><strong>Check Draft Status:</strong> Ensure no posts are accidentally set to draft=true</li>
+          <li><strong>Use Quick Links:</strong> Quickly test blog list and post pages for each language</li>
+        </ul>
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-8 text-center">
+        <p class="text-gray-500 dark:text-gray-400 mb-4">
+          This is a diagnostic page. You can delete it after verifying all links work correctly.
+        </p>
+        <div class="space-x-4">
+          <a href="/" class="text-blue-600 hover:underline">← Back to Home</a>
+          <a href="/debug-blog" class="text-blue-600 hover:underline">Debug Blog Content</a>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Layout>
+
+<style>
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
