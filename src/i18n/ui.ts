@@ -102,7 +102,7 @@ export const ui = {
 	'tvd.how1': 'Copy the TikTok Video Link',
 	'tvd.how1text': 'Open TikTok app, TikTok Lite or Website and copy the video link you want to download.',
 	'tvd.how2': 'Paste the TikTok Video URL',
-	'tvd.how2text': 'Paste the copied TikTok Video link into our TikTok downloader <a href="/download-tiktok-video/">https://musicallyio.com]</a> input field.',
+	'tvd.how2text': 'Paste the copied TikTok Video link into our TikTok downloader <a href="/download-tiktok-video/">https://musicaldown.online]</a> input field.',
 	'tvd.how3': 'Download TikTok Video',
 	'tvd.how3text': 'After process to retreive the The Videos. Click "Download" to get your favorite Tiktok download and save the video to your device in seconds.',
 	
@@ -121,7 +121,7 @@ export const ui = {
 	
 	
 	'dtv.how3': 'Paste the Video URL',
-	'dtv.how3paste': 'Paste the link into the TikTokio - TikTok downloader <a href="/download-tiktok-video/">https://musicallyio.com]</a> input box.',
+	'dtv.how3paste': 'Paste the link into the TikTokio - TikTok downloader <a href="/download-tiktok-video/">https://musicaldown.online]</a> input box.',
 	'dtv.how4': 'Download TikTok Video',
 	'dtv.how4text': 'After process TikTokio will retreive the TikTok Videos. Click <strong>"Download"</strong> to Download your favorite Tiktok Video and Save TikTok video to your device in seconds.',
 	
@@ -288,7 +288,7 @@ vi: {
   "tvd.how1": "Copy Link Video TikTok",
   "tvd.how1text": "Mở app TikTok, TikTok Lite hoặc website và copy link video bạn muốn tải.",
   "tvd.how2": "Dán URL Video TikTok",
-  "tvd.how2text": "Dán link video TikTok đã copy vào ô nhập của công cụ tải TikTok <a href=\"/download-tiktok-video/\">https://musicallyio.com</a>.",
+  "tvd.how2text": "Dán link video TikTok đã copy vào ô nhập của công cụ tải TikTok <a href=\"/download-tiktok-video/\">https://musicaldown.online</a>.",
   "tvd.how3": "Tải Video TikTok",
   "tvd.how3text": "Sau khi xử lý, nhấn \"Tải xuống\" để lấy video TikTok yêu thích và lưu về thiết bị trong vài giây.",
   "dtv.th2": "TikTokio - Tải Video TikTok Không Logo Trong Vài Giây",
@@ -301,7 +301,7 @@ vi: {
   "dtv.how2": "Truy cập TikTokio",
   "dtv.how2ntext": "Truy cập <a href=\"/\">TikTokio</a> bằng trình duyệt yêu thích (Chrome, Safari, Firefox hoặc Edge).",
   "dtv.how3": "Dán URL Video",
-  "dtv.how3paste": "Dán link vào ô nhập TikTokio - công cụ tải TikTok <a href=\"/download-tiktok-video/\">https://musicallyio.com</a>.",
+  "dtv.how3paste": "Dán link vào ô nhập TikTokio - công cụ tải TikTok <a href=\"/download-tiktok-video/\">https://musicaldown.online</a>.",
   "dtv.how4": "Tải Video TikTok",
   "dtv.how4text": "Sau khi xử lý, TikTokio sẽ lấy video TikTok. Nhấn <strong>\"Tải xuống\"</strong> để tải video TikTok yêu thích và lưu về thiết bị trong vài giây.",
 
@@ -466,7 +466,7 @@ id: {
   "tvd.how1": "Copy Link Video TikTok",
   "tvd.how1text": "Buka app TikTok, TikTok Lite atau website dan copy link video yang ingin di-download.",
   "tvd.how2": "Tempel URL Video TikTok",
-  "tvd.how2text": "Tempel link video TikTok yang dicopy ke field input downloader TikTok kami <a href=\"/download-tiktok-video/\">https://musicallyio.com</a>.",
+  "tvd.how2text": "Tempel link video TikTok yang dicopy ke field input downloader TikTok kami <a href=\"/download-tiktok-video/\">https://musicaldown.online</a>.",
   "tvd.how3": "Download Video TikTok",
   "tvd.how3text": "Setelah proses, klik \"Download\" untuk mendapatkan video TikTok favorit dan simpan ke perangkat dalam beberapa detik.",
   "dtv.th2": "TikTokio - Download Video TikTok Tanpa Watermark Dalam Beberapa Detik",
@@ -479,7 +479,7 @@ id: {
   "dtv.how2": "Kunjungi TikTokio",
   "dtv.how2ntext": "Buka <a href=\"/\">TikTokio</a> menggunakan browser favorit Anda (Chrome, Safari, Firefox atau Edge).",
   "dtv.how3": "Tempel URL Video",
-  "dtv.how3paste": "Tempel link ke kotak input TikTokio - downloader TikTok <a href=\"/download-tiktok-video/\">https://musicallyio.com</a>.",
+  "dtv.how3paste": "Tempel link ke kotak input TikTokio - downloader TikTok <a href=\"/download-tiktok-video/\">https://musicaldown.online</a>.",
   "dtv.how4": "Download Video TikTok",
   "dtv.how4text": "Setelah proses, TikTokio akan mengambil video TikTok. Klik <strong>\"Download\"</strong> untuk download video TikTok favorit dan simpan ke perangkat dalam beberapa detik.",
 
@@ -644,7 +644,7 @@ ms: {
   "tvd.how1": "Salin Pautan Video TikTok",
   "tvd.how1text": "Buka aplikasi TikTok, TikTok Lite atau laman web dan salin pautan video yang ingin dimuat turun.",
   "tvd.how2": "Tampal URL Video TikTok",
-  "tvd.how2text": "Tampal pautan video TikTok yang disalin ke medan input downloader TikTok kami <a href=\"/download-tiktok-video/\">https://musicallyio.com</a>.",
+  "tvd.how2text": "Tampal pautan video TikTok yang disalin ke medan input downloader TikTok kami <a href=\"/download-tiktok-video/\">https://musicaldown.online</a>.",
   "tvd.how3": "Muat Turun Video TikTok",
   "tvd.how3text": "Selepas pemprosesan, klik \"Muat Turun\" untuk mendapatkan video TikTok kegemaran dan simpan ke peranti dalam beberapa saat.",
   "dtv.th2": "TikTokio - Muat Turun Video TikTok Tanpa Watermark Dalam Beberapa Saat",
@@ -657,7 +657,7 @@ ms: {
   "dtv.how2": "Lawati TikTokio",
   "dtv.how2ntext": "Buka <a href=\"/\">TikTokio</a> menggunakan pelayar kegemaran anda (Chrome, Safari, Firefox atau Edge).",
   "dtv.how3": "Tampal URL Video",
-  "dtv.how3paste": "Tampal pautan ke kotak input TikTokio - downloader TikTok <a href=\"/download-tiktok-video/\">https://musicallyio.com</a>.",
+  "dtv.how3paste": "Tampal pautan ke kotak input TikTokio - downloader TikTok <a href=\"/download-tiktok-video/\">https://musicaldown.online</a>.",
   "dtv.how4": "Muat Turun Video TikTok",
   "dtv.how4text": "Selepas pemprosesan, TikTokio akan mengambil video TikTok. Klik <strong>\"Muat Turun\"</strong> untuk muat turun video TikTok kegemaran dan simpan ke peranti dalam beberapa saat.",
 

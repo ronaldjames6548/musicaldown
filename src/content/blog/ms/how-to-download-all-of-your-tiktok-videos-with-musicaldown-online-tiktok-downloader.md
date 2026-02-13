@@ -283,7 +283,7 @@ Langkah-langkah untuk menyimpan video TikTok daripada aplikasi telah dilakukan p
  
 
 Memuat turun video TikTok tanpa tanda air merupakan keinginan popular dalam kalangan pengguna. Sama ada anda ingin menyimpan video untuk tontonan luar talian, berkongsinya di platform lain atau menyimpannya untuk kegunaan peribadi, mempunyai video yang bersih tanpa tanda air TikTok selalunya lebih diutamakan. Artikel ini akan membimbing anda melalui pelbagai kaedah untuk mencapai matlamat ini.
-MusicalDown ialah [pemuat turun TikTok](https://musicallyio.com/) percuma dan mudah yang membolehkan anda menyimpan video TikTok tanpa tera air dalam format MP4 dalam resolusi HD, Full HD atau 4K. Anda tidak perlu memasang sebarang aplikasi pada peranti telefon atau komputer anda. Apa yang anda perlukan hanyalah pautan video TikTok yang boleh ditemui dengan mudah dan Tiktokio akan menguruskan selebihnya. Tiktokio membolehkan anda menyimpan video ke peranti anda dengan satu klik.
+MusicalDown ialah [pemuat turun TikTok](https://musicaldown.online/) percuma dan mudah yang membolehkan anda menyimpan video TikTok tanpa tera air dalam format MP4 dalam resolusi HD, Full HD atau 4K. Anda tidak perlu memasang sebarang aplikasi pada peranti telefon atau komputer anda. Apa yang anda perlukan hanyalah pautan video TikTok yang boleh ditemui dengan mudah dan Tiktokio akan menguruskan selebihnya. Tiktokio membolehkan anda menyimpan video ke peranti anda dengan satu klik.
 Video disimpan ke folder muat turun telefon anda. Anda boleh mengakses folder ini melalui aplikasi pengurus fail, yang telah dipasang pada kebanyakan telefon Android, biasanya Files by Google, tetapi terdapat aplikasi pengurus fail hebat yang lain. Buka aplikasi pengurus fail, ketik folder muat turun dan anda akan menemui video TikTok yang baru disimpan.
 
 ## Cara menyimpan video TikTok pada komputer
@@ -296,7 +296,7 @@ Langkah-langkah di bawah telah dilakukan pada peranti ChromeOS dalam pelayar Chr
 
 2\. Klik kanan video dan **pilih Muat Turun video**.
 
-Sama seperti semasa cuba menyimpan video pada telefon anda, anda hanya boleh [muat turun video TikTok](https://musicallyio.com/) yang boleh disimpan. Kandungan asal yang anda muat naik sepatutnya layak untuk anda simpan di luar talian.
+Sama seperti semasa cuba menyimpan video pada telefon anda, anda hanya boleh [muat turun video TikTok](https://musicaldown.online/) yang boleh disimpan. Kandungan asal yang anda muat naik sepatutnya layak untuk anda simpan di luar talian.
 
 ## Ketidakpastian berleluasa
 
