@@ -7,19 +7,68 @@ import Sectionhead from "@components/sectionhead.astro";
 import Layout from "@layouts/Layout.astro";
 import { getLangFromUrl } from "../../../i18n/utils";
 
+// CRITICAL: Enable prerendering for this page
+export const prerender = true;
+
 export async function getStaticPaths({ paginate }) {
-  const lang = "vi"; // Folder identifier
+  const lang = "vi";
   
-  const allPosts = await getCollection("blog", ({ id, data }) => {
-    // 1. Must be in the 'vi' folder
-    // 2. Must NOT be the 'keep' file
-    // 3. Must NOT be a draft
-    return id.startsWith(`${lang}/`) && !id.endsWith('keep') && !data.draft;
+  console.log('[VI PAGINATION BUILD] Starting to fetch posts...');
+  
+  // Get ALL blog posts first
+  const allBlogPosts = await getCollection("blog");
+  console.log(`[VI PAGINATION BUILD] Total posts in collection: ${allBlogPosts.length}`);
+  
+  // Filter for Vietnamese posts
+  const allPosts = allBlogPosts.filter((post) => {
+    const isVi = post.id.startsWith(`${lang}/`);
+    const notKeep = !post.id.endsWith('keep');
+    const notDraft = !post.data.draft;
+    
+    return isVi && notKeep && notDraft;
   });
 
+  console.log(`[VI PAGINATION BUILD] Filtered ${allPosts.length} Vietnamese posts`);
+
+  // Sort posts by date (newest first)
   allPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 
-  return paginate(allPosts, {
+  // CRITICAL FIX: Add cleanSlug property to each post
+  // This removes the language prefix from the slug for correct link generation
+  const postsWithCleanSlugs = allPosts.map(post => {
+    const cleanSlug = post.id.replace(`${lang}/`, '').replace('.md', '');
+    console.log(`[VI PAGINATION BUILD] Post: ${post.id} -> cleanSlug: ${cleanSlug}`);
+    
+    return {
+      ...post,
+      // Override the slug property with the clean version
+      slug: cleanSlug
+    };
+  });
+
+  // Handle empty posts
+  if (postsWithCleanSlugs.length === 0) {
+    console.log('[VI PAGINATION BUILD] WARNING: No posts found!');
+    return [{
+      params: { page: undefined },
+      props: { 
+        page: {
+          data: [],
+          url: {
+            prev: undefined,
+            next: undefined,
+            current: '/vi/blog'
+          },
+          currentPage: 1,
+          lastPage: 1,
+          total: 0
+        }
+      }
+    }];
+  }
+
+  console.log(`[VI PAGINATION BUILD] Creating pagination for ${postsWithCleanSlugs.length} posts`);
+  return paginate(postsWithCleanSlugs, {
     pageSize: 10,
   });
 }
@@ -27,6 +76,17 @@ export async function getStaticPaths({ paginate }) {
 const { page } = Astro.props;
 const safeUrl = Astro.url;
 const lang = getLangFromUrl(safeUrl);
+
+// Safe access to page data with fallback
+const pageData = page?.data || [];
+const hasPosts = pageData.length > 0;
+const prevUrl = page?.url?.prev;
+const nextUrl = page?.url?.next;
+
+console.log(`[VI PAGINATION RENDER] Page data length: ${pageData.length}`);
+if (pageData.length > 0) {
+  console.log(`[VI PAGINATION RENDER] First post slug: ${pageData[0].slug}`);
+}
 ---
 
 <Layout title="Blog">
@@ -36,12 +96,21 @@ const lang = getLangFromUrl(safeUrl);
       <Fragment slot="desc">Khám phá thông tin chi tiết về ngành và ý kiến chuyên gia.</Fragment>
     </Sectionhead>
     
-    {page.data.length > 0 ? (
-      <Posts posts={page.data} />
-      <Pagination class="mt-20" prevUrl={page.url.prev} nextUrl={page.url.next} />
+    {hasPosts ? (
+      <>
+        <Posts posts={pageData} />
+        <Pagination class="mt-20" prevUrl={prevUrl} nextUrl={nextUrl} />
+      </>
     ) : (
       <div class="py-20 text-center">
         <p class="text-gray-500 text-xl">Hiện chưa có bài viết nào.</p>
+        <p class="text-gray-400 mt-4">Vui lòng quay lại sau hoặc kiểm tra các mục khác.</p>
+        <a 
+          href="/vi/" 
+          class="inline-block mt-6 px-6 py-3 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200"
+        >
+          Quay lại trang chủ
+        </a>
       </div>
     )}
   </Container>

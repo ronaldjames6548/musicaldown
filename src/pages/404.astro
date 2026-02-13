@@ -2,9 +2,11 @@
 import Layout from "@layouts/Layout.astro";
 import Hero from "@components/md-hero.astro";
 import Container from "@components/container.astro"; 
-// Add new built-in i18n imports
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
+
+// CRITICAL: Set 404 status to prevent redirect loops
+Astro.response.status = 404;
 
 // Get current language and create translation function
 const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
@@ -17,11 +19,10 @@ function localizePath(path: string) {
 	return getRelativeLocaleUrl(lang, path);
 }
 
-
 // SEO/props: Matched to ui.ts structure (flat keys under language)
-const title = 'Error 404 - MusicallyDown - Download TikTok Videos Without Watermark in Seconds';
-const description = 'Oops! This page has gone on an unexpected adventure. Looks like youre trying to visit a page that doesnt exist (or has been moved).';
-const image = 'meta/md-tiktok-downloader.webp';  // Static; add to ui.ts if i18n needed (e.g., t('site.tvd_image'))
+const title = 'Error 404 - MusicallyDown - Download TikTok videos without watermark in seconds';
+const description = 'Oops! This page has gone on an unexpected adventure. It looks like you\'re trying to access a page that doesn\'t exist (or has been moved).';
+const image = 'meta/opengraph.webp';
 const variant = '404';
 ---
 
@@ -38,7 +39,7 @@ const variant = '404';
 						<span class="text-primary">404</span>
 					</h2>
 					<p class="text-3xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-					<p class="mt-4 mb-8 text-lg text-muted">But dont worry, you can find plenty of other things on our homepage.</p>
+					<p class="mt-4 mb-8 text-lg text-muted">But don't worry, you can find plenty of other things on our homepage.</p>
 					<a rel="noopener noreferrer" href={localizePath("/")} class="btn ml-4">Back to homepage</a>
 				</div>
 			</div>

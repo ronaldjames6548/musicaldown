@@ -3,19 +3,41 @@ import { getCollection } from "astro:content";
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
 import { getArticleReadingTime } from "@utils/blog";
-import { getLangFromUrl } from "../../../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 
+// CRITICAL: Enable prerendering for this page
+export const prerender = true;
+
 export async function getStaticPaths() {
   const lang = "vi";
+  
+  console.log('[VI SLUG BUILD] Starting to fetch posts...');
+  
+  // Get all blog posts for Vietnamese
   const blogEntries = await getCollection("blog", ({ id, data }) => {
     return id.startsWith(`${lang}/`) && !id.endsWith('keep') && !data.draft;
   });
 
+  console.log(`[VI SLUG BUILD] Found ${blogEntries.length} posts`);
+
+  // Handle case when there are no posts
+  if (blogEntries.length === 0) {
+    console.log('[VI SLUG BUILD] No posts found, returning empty array');
+    return [];
+  }
+
   return blogEntries.map((post) => {
-    // Extract slug without the 'vi/' prefix
-    const slug = post.slug.split('/').pop(); 
+    // CRITICAL: Extract slug correctly from the ID
+    let slug = post.id;
+    // Remove language prefix: "vi/"
+    slug = slug.replace(`${lang}/`, '');
+    // Remove .md extension
+    slug = slug.replace('.md', '');
+    
+    console.log(`[VI SLUG BUILD] Mapping post: ${post.id} -> slug: ${slug}`);
+    
     return {
       params: { slug },
       props: { post },
@@ -23,42 +45,96 @@ export async function getStaticPaths() {
   });
 }
 
+// Get the post from props
 const { post } = Astro.props;
+
+// Defensive check - ensure post exists
+if (!post) {
+  console.error('[VI SLUG RENDER] Post is undefined!');
+  return Astro.redirect('/vi/404');
+}
+
+console.log(`[VI SLUG RENDER] Rendering post: ${post.id}`);
+
 const { data, render } = post;
 const { Content } = await render();
 const readTime = getArticleReadingTime(post.body);
-const lang = getLangFromUrl(Astro.url);
 
+// Get current language
+const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
+const lang = getLangFromUrl(safeUrl);
+const t = useTranslations(lang);
+
+// Helper function to create localized paths
 function localizePath(path: string) {
+  if (!path || (path && path.startsWith('http')) || path === '#') return path;
   return getRelativeLocaleUrl(lang, path);
 }
 ---
 
-<Layout title={data.title} lang={lang}>
+<Layout title={data.title} lang={lang} dir="ltr">
   <Container>
     <div class="mx-auto prose prose-lg dark:prose-invert mt-14">
-      <a href={localizePath(`/blog/category/${data.category?.toLowerCase()}`)} class="text-blue-400 uppercase text-sm no-underline">
-        {data.category}
-      </a>
-      <h1 class="text-4xl font-bold mt-1 dark:text-white">{data.title}</h1>
-      <div class="flex gap-2 mt-4 text-gray-400">
-        <span>{data.author}</span>
-        <span>•</span>
-        <span>{readTime} min</span>
-        <span>•</span>
-        <time datetime={data.publishDate.toISOString()}>{data.publishDate.toDateString()}</time>
+     
+      <h1 class="text-4xl mb-3 lg:text-5xl font-bold lg:tracking-tight mt-1 lg:leading-tight dark:text-white">
+        {data.title}
+      </h1>
+	  <hr/>
+      <div class="flex gap-2 items-center">
+        
+      </div>
+      <div class="flex gap-2 mt-4 items-center flex-wrap md:flex-nowrap">
+        <span class="text-gray-400 dark:text-stone-400">
+          {data.author}
+        </span>
+        <span class="text-gray-400 dark:text-stone-400">•</span>
+        <span class="text-gray-400 dark:text-stone-400">
+          {readTime} phút
+        </span>
+        <span class="text-gray-400 dark:text-stone-400">•</span>
+        <time class="text-gray-400 dark:text-stone-400" datetime={data.publishDate.toISOString()}>
+          {data.publishDate.toLocaleDateString('vi-VN')}
+        </time>
       </div>
     </div>
 
     <div class="mx-auto prose prose-lg dark:prose-invert mt-6 dark:text-gray-200">
       <Content />
     </div>
-
+    
     <div class="mx-auto mt-20">
-      <a href={localizePath("/blog")} class="flex items-center justify-center dark:text-stone-200">
-        <Icon name="ion:arrow-back" class="w-6 h-6 mr-2" />
-        Back to blog
+      <a href={localizePath("/blog")}>
+        <div class="flex flex-row align-middle justify-center dark:text-stone-200">
+          <Icon name="ion:arrow-back" class="w-6 h-6" />
+          <p class="ml-2">Quay lại blog</p>
+        </div>
       </a>
+    </div>
+    
+    <div
+      class="mx-auto prose prose-lg dark:prose-invert mt-20"
+      x-data="{
+        initGiscus: function() {
+          let script = document.createElement('script');
+          script.src = 'https://giscus.app/client.js';
+          script.dataset.repo = 'zankhq/astros';
+          script.dataset.repoId = 'R_kgDOGa6DOg';
+          script.dataset.category = 'Blog';
+          script.dataset.categoryId = 'DIC_kwDOGa6DOs4CXazF';
+          script.dataset.mapping = 'pathname';
+          script.dataset.strict = '0';
+          script.dataset.reactionsEnabled = '1';
+          script.dataset.emitMetadata = '0';
+          script.dataset.inputPosition = 'top';
+          script.dataset.theme = localStorage.theme == 'dark' ? 'dark' : localStorage.theme == 'light' ? 'light' : 'preferred_color_scheme';
+          script.dataset.lang = 'vi';
+          script.dataset.loading = 'lazy';
+          script.crossOrigin = 'anonymous';
+          script.async = true;
+          this.$el.appendChild(script);
+        }
+      }"
+      x-init="initGiscus()">
     </div>
   </Container>
 </Layout>

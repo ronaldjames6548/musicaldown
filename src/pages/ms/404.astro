@@ -1,11 +1,12 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Hero from "@components/hero.astro";
+import Hero from "@components/md-hero.astro";
 import Container from "@components/container.astro"; 
-// Add new built-in i18n imports
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-
 import { getRelativeLocaleUrl } from "astro:i18n";
+
+// CRITICAL: Set 404 status to prevent redirect loops
+Astro.response.status = 404;
 
 // Get current language and create translation function
 const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
@@ -18,11 +19,10 @@ function localizePath(path: string) {
 	return getRelativeLocaleUrl(lang, path);
 }
 
-
-// SEO/props: Matched to ui.ts structure (flat keys under language)
-const title = 'Ralat 404 - MusicallyDown - Muat Turun Video TikTok Tanpa Tera Air dalam Beberapa Saat';
-const description = 'Aduh! Halaman ini telah melalui pengembaraan yang tidak dijangka. Nampaknya anda cuba melawat halaman yang tidak wujud (atau telah dialihkan).';
-const image = 'meta/opengraph.webp';  // Static; add to ui.ts if i18n needed (e.g., t('site.tvd_image'))
+// SEO/props for Malay
+const title = 'Ralat 404 - MusicallyDown - Muat turun video TikTok tanpa tanda air dalam beberapa saat';
+const description = 'Oops! Halaman ini telah mengalami pengembaraan yang tidak dijangka. Nampaknya anda cuba mengakses halaman yang tidak wujud (atau telah dipindahkan).';
+const image = 'meta/opengraph.webp';
 const variant = '404';
 ---
 
@@ -38,9 +38,9 @@ const variant = '404';
 						<span class="sr-only">Ralat</span>
 						<span class="text-primary">404</span>
 					</h2>
-					<p class="text-3xl font-semibold md:text-3xl">Maaf, kami tidak menemui halaman ini.</p>
-					<p class="mt-4 mb-8 text-lg text-muted">Tetapi jangan risau, anda boleh menemui banyak perkara lain di halaman utama kami.</p>
-					<a rel="noopener noreferrer" href={localizePath("/")} class="btn ml-4">Kembali ke Laman Utama</a>
+					<p class="text-3xl font-semibold md:text-3xl">Maaf, kami tidak dapat mencari halaman ini.</p>
+					<p class="mt-4 mb-8 text-lg text-muted">Tetapi jangan risau, anda boleh menemui banyak perkara lain di laman utama kami.</p>
+					<a rel="noopener noreferrer" href={localizePath("/")} class="btn ml-4">Kembali ke laman utama</a>
 				</div>
 			</div>
 		</section>

@@ -23,6 +23,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
   }
 
+  // CRITICAL FIX: Prevent redirect loops on 404 pages
+  // Check if already on a 404 page before processing
+  if (pathname === '/404' || pathname.endsWith('/404')) {
+    return next();
+  }
+
   const firstSegment = pathname.split('/').filter(Boolean)[0];
   const isLocalized = supportedLocales.includes(firstSegment as any);
 
@@ -43,10 +49,13 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   // 3. Handle 404s for Localized Routes
   const response = await next();
-  if (response.status === 404) {
+  
+  // CRITICAL FIX: Only redirect to 404 page if not already there
+  // and if the response is actually a 404
+  if (response.status === 404 && !pathname.includes('/404')) {
     const locale = isLocalized ? firstSegment : defaultLocale;
     // Redirect to /vi/404 or /404
-    return context.redirect(locale === 'en' ? '/404' : `/${locale}/404`);
+    return context.redirect(locale === 'en' ? '/404' : `/${locale}/404`, 302);
   }
 
   return response;

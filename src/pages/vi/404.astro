@@ -1,11 +1,12 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Hero from "@components/hero.astro";
+import Hero from "@components/md-hero.astro";
 import Container from "@components/container.astro"; 
-// Add new built-in i18n imports
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-
 import { getRelativeLocaleUrl } from "astro:i18n";
+
+// CRITICAL: Set 404 status to prevent redirect loops
+Astro.response.status = 404;
 
 // Get current language and create translation function
 const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
@@ -18,11 +19,10 @@ function localizePath(path: string) {
 	return getRelativeLocaleUrl(lang, path);
 }
 
-
 // SEO/props: Matched to ui.ts structure (flat keys under language)
 const title = 'Lỗi 404 - MusicallyDown - Tải xuống video TikTok không có hình mờ chỉ trong vài giây';
 const description = 'Ôi! Trang này đã trải qua một cuộc phiêu lưu bất ngờ. Có vẻ như bạn đang cố gắng truy cập một trang không tồn tại (hoặc đã được di chuyển).';
-const image = 'meta/opengraph.webp';  // Static; add to ui.ts if i18n needed (e.g., t('site.tvd_image'))
+const image = 'meta/opengraph.webp';
 const variant = '404';
 ---
 

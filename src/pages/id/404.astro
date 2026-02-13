@@ -1,11 +1,12 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Hero from "@components/hero.astro";
+import Hero from "@components/md-hero.astro";
 import Container from "@components/container.astro"; 
-// Add new built-in i18n imports
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-
 import { getRelativeLocaleUrl } from "astro:i18n";
+
+// CRITICAL: Set 404 status to prevent redirect loops
+Astro.response.status = 404;
 
 // Get current language and create translation function
 const safeUrl = Astro.url || new URL('/', Astro.site || 'http://localhost:4321');
@@ -18,11 +19,10 @@ function localizePath(path: string) {
 	return getRelativeLocaleUrl(lang, path);
 }
 
-
-// SEO/props: Matched to ui.ts structure (flat keys under language)
-const title = 'Kesalahan 404 - MusicallyDown - Download Video TikTok Tanpa Watermark Dalam Beberapa Detik';
-const description = 'Ups! Halaman ini telah mengalami petualangan yang tak terduga. Sepertinya Anda mencoba mengunjungi halaman yang tidak ada (atau telah dipindahkan).';
-const image = 'meta/opengraph.webp';  
+// SEO/props for Indonesian
+const title = 'Kesalahan 404 - MusicallyDown - Unduh video TikTok tanpa watermark dalam hitungan detik';
+const description = 'Ups! Halaman ini telah mengalami petualangan yang tidak terduga. Sepertinya Anda mencoba mengakses halaman yang tidak ada (atau telah dipindahkan).';
+const image = 'meta/opengraph.webp';
 const variant = '404';
 ---
 
@@ -39,8 +39,8 @@ const variant = '404';
 						<span class="text-primary">404</span>
 					</h2>
 					<p class="text-3xl font-semibold md:text-3xl">Maaf, kami tidak dapat menemukan halaman ini.</p>
-					<p class="mt-4 mb-8 text-lg text-muted">Tapi jangan khawatir, Anda bisa menemukan banyak hal lain di halaman utama kami.</p>
-					<a rel="noopener noreferrer" href={localizePath("/")} class="btn ml-4">Kembali ke Beranda</a>
+					<p class="mt-4 mb-8 text-lg text-muted">Tapi jangan khawatir, Anda dapat menemukan banyak hal lain di beranda kami.</p>
+					<a rel="noopener noreferrer" href={localizePath("/")} class="btn ml-4">Kembali ke beranda</a>
 				</div>
 			</div>
 		</section>
