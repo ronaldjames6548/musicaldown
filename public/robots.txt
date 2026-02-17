@@ -1,24 +1,9 @@
 # Allow only specific pages for indexing
+
 User-agent: *
+Disallow:
+Disallow: /admin/
 
-# Allow these specific pages
-Allow: /$
-Allow: /404$
-Allow: /404/$
-Allow: /about$
-Allow: /about/$
-Allow: /contact$
-Allow: /contact/$
-Allow: /privacy-policy$
-Allow: /privacy-policy/$
-Allow: /blog$
-Allow: /blog/$
-Allow: /blog/how-to-download-all-of-your-tiktok-videos-with-musicaldown-online-tiktok-downloader$
-Allow: /vi/blog/how-to-save-tiktok-videos-without-watermark/$
-
-
-# Disallow everything else
-Disallow: /
 
 
 # Sitemap location
