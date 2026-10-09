@@ -88,7 +88,6 @@ export const ui = {
 	'mainhow.step2': 'Navigate to <a href="/" class="font-semibold text-pink-600 hover:text-pink-800 underline">musicaldown.online</a> in your browser. You will see a prominent input box on the homepage. <strong>Paste</strong> the copied TikTok Video link into this box and click the <strong>"Download"</strong> button.  Musicallydown will process the link and retrieve the TikTok video information within seconds.',
 	'main.download': 'Select and Download TikTok Video',
 	'mainhow.step3': 'After processing, you will be presented with download options. Choose your favourite format (MP4 for video or MP3 for audio). Click the Download button and your TikTok Video file will begin downloading to your device.',
-	'mainhow.aftertext': 'After processing, you will be presented with download options. Choose your favourite format (MP4 for video or MP3 for audio). Click the Download button and your TikTok Video file will begin downloading to your device.',
 
     
     'pgfeatures.paraleft2': 'TikTokio, can perform a TikTok Video Downloder search and Download your favorite TikTok content in high definition (HD) without any branding. Whether you call it a <a href="/savetik-download-tiktok-video-without-watermark-free" class="font-semibold text-blue-800 hover:text-orange-600 underline">Save TikTok Video</a> tool or TikTokio shortcut, this is designed for speed, safety and simplicity.',
@@ -154,14 +153,16 @@ export const ui = {
 	'md.feature6': 'Fast, Simple and User-Friendly Interface that process straightforward: Just copy a TikTok Video URL, paste it into the site and download in seconds.',
 	  
 	// How it Works Musically Down
-	'md.howh2': 'MusicalDown - How to Download TikTok Videos Without a Watermark',
-	'md.how2text': 'MusicalDown supports multiple quality options, allowing you to download video TikTok in various resolutions, ensures that your downloaded content maintains its original quality. Beyond standard TikTok video downloads, the platform offers versatile format options. MP4 format for video downloads TikTok MP3 extraction for audio-only content. Here is you answer for the question: How to download Tiktok Videos with <a href="/how-to-download-all-of-your-tiktok-videos-with-musicaldown-online-tiktok-downloader" >Musicallydown</a> online Tiktok Downloader.',
-	'md.find': 'Copy the TikTok Video Link',
-	'mdhow.step1': 'Open the TikTok app or visit the TikTok website and find the TikTok video you want to download. Tap the <strong>"Share"</strong> button (usually represented by an arrow icon) and select <strong>"Copy Link"</strong> from the options. This copies the TikTok video URL to your device clipboard.',
-	'md.paste': 'Paste the Link into MusicalDown',
-	'mdhow.step2': 'Navigate to <a href="/" class="font-semibold text-pink-600 hover:text-pink-800 underline">musicaldown.online</a> in your browser. You will see a prominent input box on the homepage. <strong>Paste</strong> the copied TikTok Video link into this box and click the <strong>"Download"</strong> button.  Musicallydown will process the link and retrieve the TikTok video information within seconds.',
-	'md.download': 'Select and Download TikTok Video',
-	'mdhow.step3': 'After processing, you will be presented with download options. Choose your favourite format (MP4 for video or MP3 for audio). Click the Download button and your TikTok Video file will begin downloading to your device.',
+	'md.howh2': 'How to Download TikTok Videos Without Watermark Using MusicallyDown',
+	'md.how2text': 'MusicallyDown supports both MP4 video and MP3 audio, so you can save the whole clip or just the sound. It works on iPhone, Android, Windows and Mac, in any modern browser. There is no daily limit on how many videos you can download. The tool allows you to <a href="/save-tiktok-videos" class="font-semibold text-blue-800 hover:text-orange-600 underline">save TikTok videos</a> for the public and you should only reuse content you have permission to use.',
+	'md.how2text2': 'Saving a TikTok video with Musical Down takes three steps and about half a minute. You dont need a TikTok login, and the process is the same on a phone and a computer. Follow the steps below to download a TikTok video without watermark or to save its audio as an MP3.',
+    'md.find': 'Copy the TikTok video link',
+	'mdhow.step1': 'Open the TikTok app or website and find the video you want. Tap <strong>Share</strong>, then <strong>Copy link</strong>. This puts the video’s address on your clipboard, and that address is all MusicallyDown needs.',
+	'md.paste': 'Paste the link into MusicallyDown',
+	'mdhow.step2': 'Come back to MusicalDown.online, paste the link into the input box at the top and press Download. The tool reads the Tiktok video and prepares your download options within a few seconds.',
+	'md.download': 'Choose MP4 or MP3 and save',
+	'mdhow.step3': 'Pick MP4 if you want the full Tiktok video without the watermark or MP3 if you only want the sound. Then tap the download button and the file goes straight to your device.',
+	'md.aftertext': 'If a download doesn’t start, check that the video is public, since private videos can’t be saved. Make sure you copied the complete link and try again. For a longer walkthrough, read our guide on <a href="https://musicaldown.online/blog/how-to-download-all-of-your-tiktok-videos-with-musicaldown-online-tiktok-downloader/" class="font-semibold underline">How to download Tiktok videos with Musicaldown online Tiktok downloader.</a>',
 
 	// FAQs Musically Down
 	'faq.title_sec1': 'FAQs About',
